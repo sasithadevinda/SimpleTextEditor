@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
@@ -36,6 +37,7 @@ public class MainFormController {
     public MenuItem mnCopy;
     public MenuItem mnPaste;
     public MenuItem mnCut;
+    public Label lblWordCount;
 
     public void initialize(){
         txtDisplay.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -46,7 +48,10 @@ public class MainFormController {
                     stage.setTitle("*"+a);}
 
             }});
-
+        txtDisplay.textProperty().addListener(observable -> {
+            int count = txtDisplay.getText().length()-txtDisplay.getText().replaceAll("\\S[ ]","").length();
+            lblWordCount.setText(String.valueOf(count/2));
+        });
     }
 
     public Path selectFile(){
