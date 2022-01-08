@@ -5,10 +5,12 @@ import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -44,12 +46,20 @@ public class MainFormController {
     public Button btnSelectAll1;
 
     public boolean isChanged;
+    public Button btnDown;
+    public Label lblFoundText;
+    public Button btnCut;
+    public Button btnPrint;
     private Matcher matcher;
+  public  int countAll;
 
     public void initialize(){
+
         txtFind.textProperty().addListener(observable -> {
             isChanged =true;
             findOption();
+            countWords();
+            if (txtFind.getText().trim().length()==0){lblFoundText.setText("");}
         });
 
         txtDisplay.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -63,10 +73,17 @@ public class MainFormController {
         txtDisplay.textProperty().addListener(observable -> {
 
 
-            int count = txtDisplay.getText().length()-txtDisplay.getText().replaceAll("\\S[ ]","").length();
-            lblWordCount.setText(String.valueOf(count/2));
+            int count = txtDisplay.getText().length()-txtDisplay.getText().replaceAll("\\b[ ]+\\b","").length();
+            lblWordCount.setText(String.valueOf(count+1));
+            if (txtDisplay.getLength()==0){lblWordCount.setText("0");}
+            countAll =count;
         });
 
+    }
+    public void countWords(){
+        int coun=0;
+        while (matcher.find()){coun++;}
+        lblFoundText.setText(String.valueOf(coun));
     }
 
     public Path selectFile(){
@@ -77,10 +94,8 @@ public class MainFormController {
         return path;
 
     }
-    /* public File selectDirectory(){
 
-         return Files;
-     }*/
+
     public void taskNew() throws IOException {
         //txtDisplay.clear();
         AnchorPane newPane =FXMLLoader.load(getClass().getResource("../view/MainForm.fxml"));
@@ -167,16 +182,11 @@ public class MainFormController {
     public void findOption(){
         if (isChanged){
             /*System.out.println(isChanged);*/
-            matcher = Pattern.compile(txtFind.getText(),btnCaseSensitive.isSelected() ? 0: Pattern.CASE_INSENSITIVE).matcher(txtDisplay.getText());
+            matcher = Pattern.compile(txtFind.getText().trim(),btnCaseSensitive.isSelected() ? 0: Pattern.CASE_INSENSITIVE).matcher(txtDisplay.getText());
 
         }
 
-        if(matcher.find()){
 
-            System.out.println(matcher.start()+matcher.end());
-            txtDisplay.selectRange(matcher.start(),matcher.end());
-
-        }
 
     }
 
@@ -195,6 +205,33 @@ public class MainFormController {
         //String b=txtDisplay.getSelectedText();
         txtDisplay.setText(txtDisplay.getText().replaceAll(cutContent.getString(),""));
 
+
+    }
+
+    public void btnDownOnAction(ActionEvent actionEvent) {
+        findOption();
+        if(matcher.find()){
+
+
+            txtDisplay.selectRange(matcher.start(),matcher.end());
+
+        }
+
+
+
+    }
+
+    public void lblFoundText(MouseEvent mouseEvent) {
+    }
+
+    public void lblFoundTextOnAction(MouseEvent mouseEvent) {
+    }
+
+    public void btnCutOnAction(ActionEvent actionEvent) {
+        mnCut.fire();
+    }
+
+    public void btnPrint(ActionEvent actionEvent) {
 
     }
 }
