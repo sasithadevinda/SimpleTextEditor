@@ -34,12 +34,13 @@
                         <MenuItem fx:id="mnCut" mnemonicParsing="false" onAction="#mnCutOnAction" text="Cut" />
                         <MenuItem fx:id="mnCopy" mnemonicParsing="false" onAction="#mnCopyOnAction" text="Copy" />
                         <MenuItem fx:id="mnPaste" mnemonicParsing="false" onAction="#mnPasteOnAction" text="Paste" />
+                  <MenuItem fx:id="mnReplaceOne" mnemonicParsing="false" onAction="#mnReplaceOneOnAction" text="Replace" />
                         <MenuItem fx:id="mnSelectAll" mnemonicParsing="false" onAction="#mnSelectAllOnAction" text="SelectAll" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help.">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About Us" />
+                        <MenuItem fx:id="mnAboutUs" mnemonicParsing="false" onAction="#mnAboutUsOnAction" text="About Us" />
                     </items>
                 </Menu>
             </menus>
@@ -74,7 +75,7 @@
             <Font size="10.0" />
          </font>
       </ToggleButton>
-      <Button fx:id="btnReplaceTxt" layoutX="640.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnReplaceTxtOnAction" prefHeight="26.0" prefWidth="70.0" text="Replace">
+      <Button fx:id="btnReplaceTxt" layoutX="640.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnReplaceTxtOnAction" prefHeight="26.0" prefWidth="70.0" text="Replace All">
          <font>
             <Font size="9.0" />
          </font>
