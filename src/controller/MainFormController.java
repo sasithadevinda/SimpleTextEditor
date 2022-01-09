@@ -3,6 +3,8 @@ package controller;
 import com.sun.glass.ui.SystemClipboard;
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import javafx.application.Platform;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -24,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,8 +53,15 @@ public class MainFormController {
     public Label lblFoundText;
     public Button btnCut;
     public Button btnPrint;
+    public TextField txtReplceTxt;
+    public Button btnUp;
     private Matcher matcher;
-  public  int countAll;
+  public  int replaceIndex1;
+  public  int replaceIndex2;
+  public  int index2=0;
+  public ArrayList<Integer> placeReferance = new ArrayList<>();
+    public int coun;
+
 
     public void initialize(){
 
@@ -59,7 +69,8 @@ public class MainFormController {
             isChanged =true;
             findOption();
             countWords();
-            if (txtFind.getText().trim().length()==0){lblFoundText.setText("");}
+            if(txtFind.getLength()==0){lblFoundText.setText("");}
+
         });
 
         txtDisplay.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -69,21 +80,33 @@ public class MainFormController {
                 if(a.contains("*")){}else {
                     stage.setTitle("*"+a);}
 
-            }});
+            }
+           });
         txtDisplay.textProperty().addListener(observable -> {
-
-
-            int count = txtDisplay.getText().length()-txtDisplay.getText().replaceAll("\\b[ ]+\\b","").length();
-            lblWordCount.setText(String.valueOf(count+1));
-            if (txtDisplay.getLength()==0){lblWordCount.setText("0");}
-            countAll =count;
+            countAllWords();
         });
+
 
     }
     public void countWords(){
-        int coun=0;
+        coun=0;
         while (matcher.find()){coun++;}
-        lblFoundText.setText(String.valueOf(coun));
+        System.out.println(coun);
+        lblFoundText.setText(String.valueOf(coun+1));
+        if(lblFoundText.getText().equals(1+"")) {lblFoundText.setText("");}
+        matcher.reset();
+    }
+    public void countAllWords(){
+        int count2 =0;
+        Matcher matcher1 =Pattern.compile("\\S{1,}").matcher(txtDisplay.getText().trim());
+        while (matcher1.find()){
+            count2++;
+
+        }
+      if (txtDisplay.getLength()==0){
+            lblWordCount.setVisible(false);}else {
+            lblWordCount.setText(count2+"");
+      }
     }
 
     public Path selectFile(){
@@ -131,7 +154,6 @@ public class MainFormController {
     }
 
     public void btnOpenOnAction(ActionEvent actionEvent) throws IOException {
-
         taskOpen(selectFile());
     }
 
@@ -180,15 +202,27 @@ public class MainFormController {
     }
 
     public void findOption(){
-        if (isChanged){
-            /*System.out.println(isChanged);*/
-            matcher = Pattern.compile(txtFind.getText().trim(),btnCaseSensitive.isSelected() ? 0: Pattern.CASE_INSENSITIVE).matcher(txtDisplay.getText());
 
+        txtDisplay.deselect();
+        if (isChanged){
+
+            matcher = Pattern.compile(txtFind.getText(),btnCaseSensitive.isSelected() ? 0: Pattern.CASE_INSENSITIVE).matcher(txtDisplay.getText());
+            isChanged=false;
+        }
+
+        if(matcher.find()){
+            txtDisplay.selectRange(matcher.start(),matcher.end());
+
+            replaceIndex1 = matcher.start();
+            replaceIndex2 =matcher.end();
+
+        }else{
+            matcher.reset();
         }
 
 
-
     }
+
 
 
     public void mnPasteOnAction(ActionEvent actionEvent) {
@@ -209,15 +243,17 @@ public class MainFormController {
     }
 
     public void btnDownOnAction(ActionEvent actionEvent) {
+
         findOption();
-        if(matcher.find()){
+placeReferance.add(matcher.start());
+placeReferance.add(matcher.end());
 
 
-            txtDisplay.selectRange(matcher.start(),matcher.end());
+        if(placeReferance.size()+1>2*(coun)){
+           placeReferance.clear();
 
         }
-
-
+        System.out.println(placeReferance.toString());
 
     }
 
@@ -233,5 +269,17 @@ public class MainFormController {
 
     public void btnPrint(ActionEvent actionEvent) {
 
+    }
+
+    public void btnReplaceTxtOnAction(ActionEvent actionEvent) {
+        //System.out.println(replaceIndex1+"  "+replaceIndex2);
+txtDisplay.setText(txtDisplay.getText().replaceAll(txtFind.getText(),txtReplceTxt.getText()));
+
+          //  txtDisplay.setText(txtDisplay.getText().substring(0, replaceIndex1) + txtReplceTxt.getText() + txtDisplay.getText(replaceIndex2, txtDisplay.getLength()));
+
+    }
+
+    public void btnUpOnAction(ActionEvent actionEvent) {
+        txtDisplay.deselect();
     }
 }
