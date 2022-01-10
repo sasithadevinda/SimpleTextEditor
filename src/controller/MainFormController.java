@@ -62,7 +62,7 @@ public class MainFormController {
   public  int replaceIndex1;
   public  int replaceIndex2;
   public  int nextIndex1;
-  public  int nextIndex2;
+  public  boolean rer=false;
   public  int index2=0;
   public ArrayList<Integer> placeReferance = new ArrayList<>();
     public ArrayList<Integer> placeRefer = new ArrayList<>();
@@ -82,10 +82,18 @@ int k=0;
 
         });
         txtFind.textProperty().addListener(observable -> {
+
             placeRefer.clear();
+            if(!rer){
+                btnDown.setDisable(true);
+                btnUp.setDisable(true);
+                return;}
             placeRefer.add(matcher.start());
             placeRefer.add(matcher.end());
+            System.out.println("AAAAAAAAA");
             while (matcher.find()){
+                btnDown.setDisable(false);
+                btnUp.setDisable(false);
                 placeRefer.add(matcher.start());
                 placeRefer.add(matcher.end());
             }
@@ -230,19 +238,23 @@ int k=0;
     }
 
     public void findOption(){
+        try{txtDisplay.deselect();
+            if (isChanged){
 
-        txtDisplay.deselect();
-        if (isChanged){
+                matcher = Pattern.compile(txtFind.getText(),btnCaseSensitive.isSelected() ? 0: Pattern.CASE_INSENSITIVE).matcher(txtDisplay.getText());
+                isChanged=false;
+            }}catch (Exception e){}
 
-            matcher = Pattern.compile(txtFind.getText(),btnCaseSensitive.isSelected() ? 0: Pattern.CASE_INSENSITIVE).matcher(txtDisplay.getText());
-            isChanged=false;
-        }
+rer=matcher.find();
+        if(rer){
+            try{ txtDisplay.selectRange(matcher.start(),matcher.end());
+                m=matcher.start();
+                replaceIndex1 = matcher.start();
+                replaceIndex2 =matcher.end();}
+            catch (Exception e){
 
-        if(matcher.find()){
-            txtDisplay.selectRange(matcher.start(),matcher.end());
-            m=matcher.start();
-            replaceIndex1 = matcher.start();
-            replaceIndex2 =matcher.end();
+            }
+
 
         }else{
             matcher.reset();
@@ -272,10 +284,14 @@ int k=0;
 
     public void btnDownOnAction(ActionEvent actionEvent) {
 
+
+
         k=k+2;
         System.out.println(placeRefer.toString());
         txtDisplay.selectRange(placeRefer.get(0+k),placeRefer.get(1+k));
         nextIndex1=k;
+
+        if(placeRefer.get(k+1)==placeRefer.get(placeRefer.size()-1)){btnDown.setDisable(true);btnUp.setDisable(false);}
         //nextIndex2=1+k;
      /*   try {
             findOption();
@@ -314,13 +330,15 @@ int k=0;
 txtDisplay.setText(txtDisplay.getText().replaceAll(txtFind.getText(),txtReplceTxt.getText()));
 
           //  txtDisplay.setText(txtDisplay.getText().substring(0, replaceIndex1) + txtReplceTxt.getText() + txtDisplay.getText(replaceIndex2, txtDisplay.getLength()));
-
+placeRefer.clear();
     }
 
     public void btnUpOnAction(ActionEvent actionEvent) {
 
         txtDisplay.selectRange(placeRefer.get(0+k-2),placeRefer.get(1+k-2));
         k=k-2;
+        if (k<0){btnUp.setDisable(true);btnDown.setDisable(false);}
+        if(placeRefer.get(0)==placeRefer.get(k)){btnUp.setDisable(true);btnDown.setDisable(false);}
 //        btnDown.setDisable(false);
 //        //findOption();
 //       // txtDisplay.deselect();
@@ -361,8 +379,28 @@ txtDisplay.setText(txtDisplay.getText().replaceAll(txtFind.getText(),txtReplceTx
     }
 
     public void mnReplaceOneOnAction(ActionEvent actionEvent) {
-        String b = txtDisplay.getText(0, placeRefer.get(k)) + txtReplceTxt.getText() + txtDisplay.getText(placeRefer.get(k + 2), txtDisplay.getLength() - 1);
-        txtDisplay.setText(b);
+        String w = txtDisplay.getText(placeRefer.get(k+1),txtDisplay.getLength());
+        String b = txtDisplay.getText(0, placeRefer.get(k));
+        String c =txtReplceTxt.getText();
+        txtDisplay.setText(b+c+w);
+        w=null;
+        b=null;
+        c=null;
+        System.gc();
+        int r =placeRefer.get(k+1)-placeRefer.get(k);
+        int k =(txtReplceTxt.getLength()-r);
+           placeRefer.remove(k);
+           placeRefer.remove(k);
+           int m=placeRefer.size();
+        System.out.println(k);
+        for(int i=k;i<m;i++){
+            int t =placeRefer.get(i)+r;
+            //System.out.println(r);
+            placeRefer.add(i,t);
+        }
+        System.out.println(placeRefer);
+      //  }
+
     }
 
 
