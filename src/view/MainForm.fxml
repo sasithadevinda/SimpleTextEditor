@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -16,9 +17,9 @@
 <AnchorPane prefHeight="498.0" prefWidth="701.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainFormController">
     <children>
         <Separator layoutY="35.0" prefHeight="3.0" prefWidth="610.0" />
-        <Separator layoutY="140.0" prefHeight="3.0" prefWidth="715.0" />
-        <TextArea fx:id="txtDisplay" layoutX="18.0" layoutY="159.0" prefHeight="275.0" prefWidth="670.0" />
-        <MenuBar layoutY="-1.0" prefHeight="36.0" prefWidth="715.0">
+        <Separator layoutY="140.0" prefHeight="3.0" prefWidth="715.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" />
+        <TextArea fx:id="txtDisplay" layoutX="18.0" layoutY="159.0" prefHeight="275.0" prefWidth="670.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="159.0" />
+        <MenuBar layoutY="-1.0" prefHeight="36.0" prefWidth="715.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="-1.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -45,46 +46,84 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <Button fx:id="btnNew" layoutX="65.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnNewOnAction" prefHeight="45.0" prefWidth="44.0" />
-        <Button fx:id="btnOpen" layoutX="112.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnOpenOnAction" prefHeight="45.0" prefWidth="40.0" />
-        <Button fx:id="btnCut" layoutX="155.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnCutOnAction" prefHeight="45.0" prefWidth="40.0" />
-        <Button fx:id="btnPrint" layoutX="197.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnPrint" prefHeight="45.0" prefWidth="40.0" />
-        <Button fx:id="btnSelectAll" layoutX="239.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnSelectAllOnAction" prefHeight="45.0" prefWidth="40.0" />
-        <Button fx:id="btnSave" layoutX="14.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="45.0" prefWidth="49.0" />
-        <ImageView fitHeight="45.0" fitWidth="40.0" layoutX="72.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" />
-        <ImageView fitHeight="45.0" fitWidth="40.0" layoutX="189.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <!-- <Image url="@../source/assert/cut.png" />-->
-            </image>
-        </ImageView>
-        <ImageView fitHeight="45.0" fitWidth="40.0" layoutX="241.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="btnSelectAll1" layoutX="281.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnSelectAllOnAction" prefHeight="45.0" prefWidth="40.0" />
-      <Button layoutX="324.0" layoutY="40.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="44.0" />
-      <Button layoutX="373.0" layoutY="40.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="44.0" />
-      <Separator layoutX="424.0" layoutY="35.0" orientation="VERTICAL" prefHeight="106.0" prefWidth="6.0" />
-      <TextField fx:id="txtFind" layoutX="430.0" layoutY="43.0" prefHeight="36.0" prefWidth="129.0" />
-      <Separator layoutX="426.0" layoutY="92.0" prefHeight="3.0" prefWidth="135.0" />
-      <Separator layoutX="561.0" layoutY="36.0" orientation="VERTICAL" prefHeight="106.0" prefWidth="6.0" />
-      <TextField fx:id="txtReplceTxt" layoutX="430.0" layoutY="98.0" prefHeight="36.0" prefWidth="129.0" />
-      <Button fx:id="btnDown" layoutX="567.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnDownOnAction" prefHeight="90.0" prefWidth="31.0" />
-      <Button fx:id="btnUp" layoutX="601.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnUpOnAction" prefHeight="90.0" prefWidth="31.0" />
-      <Separator layoutX="634.0" layoutY="35.0" orientation="VERTICAL" prefHeight="106.0" prefWidth="6.0" />
-      <ToggleButton fx:id="btnRegEx" layoutX="640.0" layoutY="39.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="RegEx" />
-      <ToggleButton fx:id="btnCaseSensitive" layoutX="640.0" layoutY="74.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="CaseSenstive">
+        <Button fx:id="btnNew" layoutX="65.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnNewOnAction" prefHeight="45.0" prefWidth="44.0" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="39.0">
+         <graphic>
+            <ImageView fitHeight="46.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/new.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+        <Button fx:id="btnOpen" layoutX="110.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnOpenOnAction" prefHeight="45.0" prefWidth="40.0">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/open.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+        <Button fx:id="btnCut" layoutX="156.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnCutOnAction" prefHeight="45.0" prefWidth="40.0">
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/cut.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+        <Button fx:id="btnPrint" layoutX="296.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnPrint" prefHeight="45.0" prefWidth="40.0">
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/print.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+        <Button fx:id="btnSelectAll" layoutX="251.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnSelectAllOnAction" prefHeight="45.0" prefWidth="40.0">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/selectall.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+        <Button fx:id="btnSave" layoutX="14.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="45.0" prefWidth="49.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="39.0">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/save.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="btnPaste" layoutX="200.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnPasteOnAction" prefHeight="45.0" prefWidth="40.0">
+         <graphic>
+            <ImageView fitHeight="31.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../asserts/paste.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <TextField fx:id="txtFind" layoutX="430.0" layoutY="43.0" prefHeight="36.0" prefWidth="129.0" AnchorPane.rightAnchor="157.0" AnchorPane.topAnchor="43.0" />
+      <Separator layoutX="561.0" layoutY="36.0" orientation="VERTICAL" prefHeight="106.0" prefWidth="6.0" AnchorPane.rightAnchor="149.0" AnchorPane.topAnchor="36.0" />
+      <TextField fx:id="txtReplceTxt" layoutX="430.0" layoutY="98.0" prefHeight="36.0" prefWidth="129.0" AnchorPane.rightAnchor="157.0" AnchorPane.topAnchor="98.0" />
+      <Button fx:id="btnDown" layoutX="567.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnDownOnAction" prefHeight="90.0" prefWidth="31.0" AnchorPane.rightAnchor="118.0" AnchorPane.topAnchor="45.0" />
+      <Button fx:id="btnUp" layoutX="601.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnUpOnAction" prefHeight="90.0" prefWidth="31.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="45.0" />
+      <Separator layoutX="634.0" layoutY="35.0" orientation="VERTICAL" prefHeight="106.0" prefWidth="6.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="35.0" />
+      <ToggleButton fx:id="btnRegEx" layoutX="640.0" layoutY="39.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="RegEx" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="39.0" />
+      <ToggleButton fx:id="btnCaseSensitive" layoutX="640.0" layoutY="74.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="CaseSenstive" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="74.0">
          <font>
             <Font size="10.0" />
          </font>
       </ToggleButton>
-      <Button fx:id="btnReplaceTxt" layoutX="640.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnReplaceTxtOnAction" prefHeight="26.0" prefWidth="70.0" text="Replace All">
+      <Button fx:id="btnReplaceTxt" layoutX="640.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnReplaceTxtOnAction" prefHeight="26.0" prefWidth="70.0" text="Replace All" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="108.0">
          <font>
             <Font size="9.0" />
          </font>
       </Button>
-      <Separator layoutX="634.0" layoutY="68.0" prefHeight="3.0" prefWidth="81.0" />
-      <Separator layoutX="635.0" layoutY="104.0" prefHeight="3.0" prefWidth="81.0" />
-      <Label layoutX="21.0" layoutY="452.0" text="Found Text :" />
-      <Label fx:id="lblFoundText" layoutX="99.0" layoutY="452.0" onDragDetected="#lblFoundTextOnAction" prefHeight="16.0" prefWidth="49.0" />
-      <Label layoutX="545.0" layoutY="452.0" text="Word Count :" />
-      <Label fx:id="lblWordCount" layoutX="640.0" layoutY="452.0" prefHeight="16.0" prefWidth="49.0" />
+      <Separator layoutX="634.0" layoutY="68.0" prefHeight="3.0" prefWidth="81.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="68.0" />
+      <Separator layoutX="635.0" layoutY="104.0" prefHeight="3.0" prefWidth="81.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="104.0" />
+      <Label layoutX="21.0" layoutY="452.0" text="Found Text :" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="613.0" AnchorPane.topAnchor="452.0" />
+      <Label fx:id="lblFoundText" layoutX="99.0" layoutY="452.0" onDragDetected="#lblFoundTextOnAction" prefHeight="16.0" prefWidth="49.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="99.0" AnchorPane.rightAnchor="568.0" AnchorPane.topAnchor="452.0" />
+      <Label layoutX="545.0" layoutY="452.0" text="Word Count :" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="545.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="452.0" />
+      <Label fx:id="lblWordCount" layoutX="640.0" layoutY="452.0" prefHeight="16.0" prefWidth="49.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="545.0" AnchorPane.rightAnchor="85.0" AnchorPane.topAnchor="452.0" />
     </children>
 </AnchorPane>

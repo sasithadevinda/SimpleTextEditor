@@ -57,51 +57,57 @@ public class MainFormController {
     public Button btnUp;
     public MenuItem mnAboutUs;
     public MenuItem mnReplaceOne;
+    public Button btnPaste;
 
     private Matcher matcher;
-  public  int replaceIndex1;
-  public  int replaceIndex2;
-  public  int nextIndex1;
-  public  boolean rer=false;
-  public  int index2=0;
-  public ArrayList<Integer> placeReferance = new ArrayList<>();
+    public int replaceIndex1;
+    public int replaceIndex2;
+    public int nextIndex1;
+    public boolean rer = false;
+    public int index2 = 0;
+    public ArrayList<Integer> placeReferance = new ArrayList<>();
     public ArrayList<Integer> placeRefer = new ArrayList<>();
     public int coun;
-int m;
-int k=0;
+    int m;
+    int k = 0;
 
-    public void initialize(){
-        if (btnDown.isDisabled()){btnUp.requestFocus();
-        btnUp.setDisable(false);}
+    public void initialize() {
+        if (btnDown.isDisabled()) {
+            btnUp.requestFocus();
+            btnUp.setDisable(false);
+        }
         txtFind.textProperty().addListener(observable -> {
             btnDown.setDisable(false);
-            isChanged =true;
+            isChanged = true;
             findOption();
             //countWords();
-           // if(txtFind.getLength()==0){lblFoundText.setText("");}
+            // if(txtFind.getLength()==0){lblFoundText.setText("");}
 
         });
         txtFind.textProperty().addListener(observable -> {
 
             placeRefer.clear();
-            if(!rer){
+            if (!rer) {
                 btnDown.setDisable(true);
                 btnUp.setDisable(true);
-                return;}
+                return;
+            }
             placeRefer.add(matcher.start());
             placeRefer.add(matcher.end());
             System.out.println("AAAAAAAAA");
-            while (matcher.find()){
+            while (matcher.find()) {
                 btnDown.setDisable(false);
                 btnUp.setDisable(false);
                 placeRefer.add(matcher.start());
                 placeRefer.add(matcher.end());
             }
-            txtDisplay.selectRange(placeRefer.get(0),placeRefer.get(1));
+            txtDisplay.selectRange(placeRefer.get(0), placeRefer.get(1));
             System.out.println(placeRefer.toString());
             System.out.println(placeRefer.size());
-            lblFoundText.setText(String.valueOf((placeRefer.size())/2));
-            if(txtFind.getLength()==0){lblFoundText.setText("");}
+            lblFoundText.setText(String.valueOf((placeRefer.size()) / 2));
+            if (txtFind.getLength() == 0) {
+                lblFoundText.setText("");
+            }
 
 
             System.gc();
@@ -109,43 +115,52 @@ int k=0;
 
         txtDisplay.textProperty().addListener((observable, oldValue, newValue) -> {
             btnDown.setDisable(false);
-            if(oldValue!=newValue){
+            if (oldValue != newValue) {
                 Stage stage = (Stage) txtDisplay.getScene().getWindow();
-                String a=stage.getTitle().toString();
-                if(a.contains("*")){}else {
-                    stage.setTitle("*"+a);}
+                String a = stage.getTitle().toString();
+                if (a.contains("*")) {
+                } else {
+                    stage.setTitle("*" + a);
+                }
 
             }
-           });
+        });
         txtDisplay.textProperty().addListener(observable -> {
-          // lblFoundText.setText(String.valueOf(placeRefer.size()/2));
-           // countAllWords();
+            // lblFoundText.setText(String.valueOf(placeRefer.size()/2));
+            // countAllWords();
         });
 
 
     }
-    public void countWords(){
-        coun=0;
-        while (matcher.find()){coun++;}
+
+    public void countWords() {
+        coun = 0;
+        while (matcher.find()) {
+            coun++;
+        }
         System.out.println(coun);
-        lblFoundText.setText(String.valueOf(coun+1));
-        if(lblFoundText.getText().equals(1+"")) {lblFoundText.setText("");}
+        lblFoundText.setText(String.valueOf(coun + 1));
+        if (lblFoundText.getText().equals(1 + "")) {
+            lblFoundText.setText("");
+        }
         matcher.reset();
     }
-    public void countAllWords(){
-        int count2 =0;
-        Matcher matcher1 =Pattern.compile("\\S{1,}").matcher(txtDisplay.getText().trim());
-        while (matcher1.find()){
+
+    public void countAllWords() {
+        int count2 = 0;
+        Matcher matcher1 = Pattern.compile("\\S{1,}").matcher(txtDisplay.getText().trim());
+        while (matcher1.find()) {
             count2++;
 
         }
-      if (txtDisplay.getLength()==0){
-            lblWordCount.setVisible(false);}else {
-            lblWordCount.setText(count2+"");
-      }
+        if (txtDisplay.getLength() == 0) {
+            lblWordCount.setVisible(false);
+        } else {
+            lblWordCount.setText(count2 + "");
+        }
     }
 
-    public Path selectFile(){
+    public Path selectFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open a file");
         File file = fileChooser.showOpenDialog(null);
@@ -157,9 +172,9 @@ int k=0;
 
     public void taskNew() throws IOException {
         //txtDisplay.clear();
-        AnchorPane newPane =FXMLLoader.load(getClass().getResource("../view/MainForm.fxml"));
+        AnchorPane newPane = FXMLLoader.load(getClass().getResource("../view/MainForm.fxml"));
         Scene newScene = new Scene(newPane);
-        Stage newStage =new Stage();
+        Stage newStage = new Stage();
         newStage.setTitle("Untitled");
         newStage.setScene(newScene);
         newStage.show();
@@ -175,13 +190,14 @@ int k=0;
 
         txtDisplay.setText(fileContent);
         Stage stage = (Stage) txtDisplay.getScene().getWindow();
-        stage.setTitle(""+path1.getFileName().toString());
+        stage.setTitle("" + path1.getFileName().toString());
 
     }
+
     public void taskSave() throws IOException {
-        FileChooser fileChooser =new FileChooser();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
-        File file =fileChooser.showSaveDialog(null);
+        File file = fileChooser.showSaveDialog(null);
         String displayContent = new String(txtDisplay.getText());
         byte[] bytes = displayContent.getBytes();
         OutputStream os = Files.newOutputStream(file.toPath());
@@ -237,26 +253,30 @@ int k=0;
 
     }
 
-    public void findOption(){
-        try{txtDisplay.deselect();
-            if (isChanged){
+    public void findOption() {
+        try {
+            txtDisplay.deselect();
+            if (isChanged) {
 
-                matcher = Pattern.compile(txtFind.getText(),btnCaseSensitive.isSelected() ? 0: Pattern.CASE_INSENSITIVE).matcher(txtDisplay.getText());
-                isChanged=false;
-            }}catch (Exception e){}
+                matcher = Pattern.compile(txtFind.getText(), btnCaseSensitive.isSelected() ? 0 : Pattern.CASE_INSENSITIVE).matcher(txtDisplay.getText());
+                isChanged = false;
+            }
+        } catch (Exception e) {
+        }
 
-rer=matcher.find();
-        if(rer){
-            try{ txtDisplay.selectRange(matcher.start(),matcher.end());
-                m=matcher.start();
+        rer = matcher.find();
+        if (rer) {
+            try {
+                txtDisplay.selectRange(matcher.start(), matcher.end());
+                m = matcher.start();
                 replaceIndex1 = matcher.start();
-                replaceIndex2 =matcher.end();}
-            catch (Exception e){
+                replaceIndex2 = matcher.end();
+            } catch (Exception e) {
 
             }
 
 
-        }else{
+        } else {
             matcher.reset();
         }
 
@@ -264,20 +284,19 @@ rer=matcher.find();
     }
 
 
-
     public void mnPasteOnAction(ActionEvent actionEvent) {
         Clipboard paste = Clipboard.getSystemClipboard();
         int caretPosition = txtDisplay.getCaretPosition();
-        txtDisplay.insertText(caretPosition,paste.getString());
+        txtDisplay.insertText(caretPosition, paste.getString());
     }
 
     public void mnCutOnAction(ActionEvent actionEvent) {
         Clipboard systemClipboard = Clipboard.getSystemClipboard();
-        ClipboardContent cutContent =new ClipboardContent();
+        ClipboardContent cutContent = new ClipboardContent();
         cutContent.putString(txtDisplay.getSelectedText());
         systemClipboard.setContent(cutContent);
         //String b=txtDisplay.getSelectedText();
-        txtDisplay.setText(txtDisplay.getText().replaceAll(cutContent.getString(),""));
+        txtDisplay.setText(txtDisplay.getText().replaceAll(cutContent.getString(), ""));
 
 
     }
@@ -285,13 +304,15 @@ rer=matcher.find();
     public void btnDownOnAction(ActionEvent actionEvent) {
 
 
-
-        k=k+2;
+        k = k + 2;
         System.out.println(placeRefer.toString());
-        txtDisplay.selectRange(placeRefer.get(0+k),placeRefer.get(1+k));
-        nextIndex1=k;
+        txtDisplay.selectRange(placeRefer.get(0 + k), placeRefer.get(1 + k));
+        nextIndex1 = k;
 
-        if(placeRefer.get(k+1)==placeRefer.get(placeRefer.size()-1)){btnDown.setDisable(true);btnUp.setDisable(false);}
+        if (placeRefer.get(k + 1) == placeRefer.get(placeRefer.size() - 1)) {
+            btnDown.setDisable(true);
+            btnUp.setDisable(false);
+        }
         //nextIndex2=1+k;
      /*   try {
             findOption();
@@ -327,18 +348,24 @@ rer=matcher.find();
 
     public void btnReplaceTxtOnAction(ActionEvent actionEvent) {
         //System.out.println(replaceIndex1+"  "+replaceIndex2);
-txtDisplay.setText(txtDisplay.getText().replaceAll(txtFind.getText(),txtReplceTxt.getText()));
+        txtDisplay.setText(txtDisplay.getText().replaceAll(txtFind.getText(), txtReplceTxt.getText()));
 
-          //  txtDisplay.setText(txtDisplay.getText().substring(0, replaceIndex1) + txtReplceTxt.getText() + txtDisplay.getText(replaceIndex2, txtDisplay.getLength()));
-placeRefer.clear();
+        //  txtDisplay.setText(txtDisplay.getText().substring(0, replaceIndex1) + txtReplceTxt.getText() + txtDisplay.getText(replaceIndex2, txtDisplay.getLength()));
+        placeRefer.clear();
     }
 
     public void btnUpOnAction(ActionEvent actionEvent) {
 
-        txtDisplay.selectRange(placeRefer.get(0+k-2),placeRefer.get(1+k-2));
-        k=k-2;
-        if (k<0){btnUp.setDisable(true);btnDown.setDisable(false);}
-        if(placeRefer.get(0)==placeRefer.get(k)){btnUp.setDisable(true);btnDown.setDisable(false);}
+        txtDisplay.selectRange(placeRefer.get(0 + k - 2), placeRefer.get(1 + k - 2));
+        k = k - 2;
+        if (k < 0) {
+            btnUp.setDisable(true);
+            btnDown.setDisable(false);
+        }
+        if (placeRefer.get(0) == placeRefer.get(k)) {
+            btnUp.setDisable(true);
+            btnDown.setDisable(false);
+        }
 //        btnDown.setDisable(false);
 //        //findOption();
 //       // txtDisplay.deselect();
@@ -369,37 +396,45 @@ placeRefer.clear();
     }
 
     public void mnAboutUsOnAction(ActionEvent actionEvent) throws IOException {
-  AnchorPane paneAboutUs =FXMLLoader.load(getClass().getResource("../view/AboutUs.fxml"));
-  Scene aboutusscene = new Scene(paneAboutUs);
-  Stage stage1 = new Stage();
-  stage1.setTitle("About Us");
-  stage1.setScene(aboutusscene);
-  stage1.show();
+        AnchorPane paneAboutUs = FXMLLoader.load(getClass().getResource("../view/AboutUs.fxml"));
+        Scene aboutusscene = new Scene(paneAboutUs);
+        Stage stage1 = new Stage();
+        stage1.setTitle("About Us");
+        stage1.setScene(aboutusscene);
+        stage1.show();
 
     }
 
     public void mnReplaceOneOnAction(ActionEvent actionEvent) {
-        String w = txtDisplay.getText(placeRefer.get(k+1),txtDisplay.getLength());
+        String w = txtDisplay.getText(placeRefer.get(k + 1), txtDisplay.getLength());
         String b = txtDisplay.getText(0, placeRefer.get(k));
-        String c =txtReplceTxt.getText();
-        txtDisplay.setText(b+c+w);
-        w=null;
-        b=null;
-        c=null;
+        String c = txtReplceTxt.getText();
+        txtDisplay.setText(b + c + w);
+        w = null;
+        b = null;
+        c = null;
         System.gc();
-        int r =placeRefer.get(k+1)-placeRefer.get(k);
-        int k =(txtReplceTxt.getLength()-r);
-           placeRefer.remove(k);
-           placeRefer.remove(k);
-           int m=placeRefer.size();
+        int r = placeRefer.get(k + 1) - placeRefer.get(k);
+        int k = (txtReplceTxt.getLength() - r);
+        placeRefer.remove(k);
+        placeRefer.remove(k);
+        int m = placeRefer.size();
         System.out.println(k);
-        for(int i=k;i<m;i++){
-            int t =placeRefer.get(i)+r;
+        for (int i = k; i < m; i++) {
+            int t = placeRefer.get(i) + r;
             //System.out.println(r);
-            placeRefer.add(i,t);
+            placeRefer.add(i, t);
         }
         System.out.println(placeRefer);
-      //  }
+        //  }
+
+    }
+
+    public void btnPasteOnAction(ActionEvent actionEvent) {
+        mnPaste.fire();
+    }
+
+    public void btnFindAllOnAction(ActionEvent actionEvent) {
 
     }
 
