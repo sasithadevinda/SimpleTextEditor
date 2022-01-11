@@ -108,8 +108,8 @@
       <Button fx:id="btnDown" layoutX="567.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnDownOnAction" prefHeight="90.0" prefWidth="31.0" AnchorPane.rightAnchor="118.0" AnchorPane.topAnchor="45.0" />
       <Button fx:id="btnUp" layoutX="601.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnUpOnAction" prefHeight="90.0" prefWidth="31.0" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="45.0" />
       <Separator layoutX="634.0" layoutY="35.0" orientation="VERTICAL" prefHeight="106.0" prefWidth="6.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="35.0" />
-      <ToggleButton fx:id="btnRegEx" layoutX="640.0" layoutY="39.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="RegEx" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="39.0" />
-      <ToggleButton fx:id="btnCaseSensitive" layoutX="640.0" layoutY="74.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="CaseSenstive" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="74.0">
+      <ToggleButton fx:id="btnRegEx" layoutX="640.0" layoutY="39.0" mnemonicParsing="false" onAction="#btnRegExOnAction" prefHeight="26.0" prefWidth="70.0" text="RegEx" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="39.0" />
+      <ToggleButton fx:id="btnCaseSensitive" layoutX="640.0" layoutY="74.0" mnemonicParsing="false" onAction="#btnCaseSensitiveOnAction" prefHeight="26.0" prefWidth="70.0" text="CaseSenstive" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="74.0">
          <font>
             <Font size="10.0" />
          </font>

@@ -94,7 +94,7 @@ public class MainFormController {
             }
             placeRefer.add(matcher.start());
             placeRefer.add(matcher.end());
-            System.out.println("AAAAAAAAA");
+          //  System.out.println("AAAAAAAAA");
             while (matcher.find()) {
                 btnDown.setDisable(false);
                 btnUp.setDisable(false);
@@ -257,8 +257,12 @@ public class MainFormController {
         try {
             txtDisplay.deselect();
             if (isChanged) {
+                int flags = 0;
+                if (!btnRegEx.isSelected()) flags = flags | Pattern.LITERAL;
+                if (!btnCaseSensitive.isSelected()) flags = flags | Pattern.CASE_INSENSITIVE;
 
-                matcher = Pattern.compile(txtFind.getText(), btnCaseSensitive.isSelected() ? 0 : Pattern.CASE_INSENSITIVE).matcher(txtDisplay.getText());
+                matcher = Pattern.compile(txtFind.getText(), flags)
+                        .matcher(txtDisplay.getText());
                 isChanged = false;
             }
         } catch (Exception e) {
@@ -425,7 +429,7 @@ public class MainFormController {
             //System.out.println(r);
             placeRefer.add(i, t);
         }
-        System.out.println(placeRefer);
+//        System.out.println(placeRefer);
         //  }
 
     }
@@ -436,6 +440,16 @@ public class MainFormController {
 
     public void btnFindAllOnAction(ActionEvent actionEvent) {
 
+    }
+
+    public void btnRegExOnAction(ActionEvent actionEvent) {
+        isChanged =true;
+        findOption();
+    }
+
+    public void btnCaseSensitiveOnAction(ActionEvent actionEvent) {
+        isChanged =true;
+        findOption();
     }
 
 
